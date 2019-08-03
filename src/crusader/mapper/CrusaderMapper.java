@@ -7,8 +7,13 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.function.Supplier;
 import java.util.prefs.Preferences;
 
+import crusader.mapper.util.DragDropUtil;
+import crusader.mapper.util.FileUtil;
+import crusader.mapper.util.SoundUtil;
+import crusader.mapper.util.UI_Util;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -71,121 +76,14 @@ public class CrusaderMapper extends Application {
 		Label sDirLabel = new Label("sdir=" + sDir.getAbsolutePath());
 		HBox bottom = new HBox(5, cDirLabel, sDirLabel, currentSoundLabel);
 		
-		ListView<FileWrapper> cView = new ListView<FileWrapper>(cList);
-		cView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				if(e.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-					if(e.getClickCount() == 2) {
-						playSound(cView.getSelectionModel().getSelectedItem().getFile());
-					}
-				}
-			}
-		});
-		cView.setOnDragDetected(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-		        /* drag was detected, start a drag-and-drop gesture*/
-		        /* allow any transfer mode */
-		        Dragboard db = cView.startDragAndDrop(TransferMode.ANY);
-		        
-		        /* Put a string on a dragboard */
-		        ClipboardContent content = new ClipboardContent();
-		        content.putString("c:" + cView.getSelectionModel().getSelectedIndex());
-		        db.setContent(content);
-		        
-		        event.consume();				
-			}
-		});
-		
-		ListView<FileWrapper> sView = new ListView<FileWrapper>(sList);
-		sView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				if(e.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-					if(e.getClickCount() == 2) {
-						playSound(sView.getSelectionModel().getSelectedItem().getFile());
-					}
-				}
-			}
-		});
-		sView.setOnDragDetected(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-		        /* drag was detected, start a drag-and-drop gesture*/
-		        /* allow any transfer mode */
-		        Dragboard db = sView.startDragAndDrop(TransferMode.ANY);
-		        
-		        /* Put a string on a dragboard */
-		        ClipboardContent content = new ClipboardContent();
-		        content.putString("s:" + sView.getSelectionModel().getSelectedIndex());
-		        db.setContent(content);
-		        
-		        event.consume();				
-			}
-		});
+		ListView<FileWrapper> cView = initListView(cList, "c");
+		ListView<FileWrapper> sView = initListView(sList, "s");
 		
 		ListView<CSMapping> center = new ListView<CSMapping>(mList);
-        center.setOnDragOver(new EventHandler<DragEvent>() {
-			@Override
-			public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                if (db.getString() != null) {
-                	if( center.getUserData() == null || !(getKey(db.getString()).equals(getKey((String) center.getUserData())))) {
-                        event.acceptTransferModes(TransferMode.COPY);
-                	}
-                } else {
-                    event.consume();
-                }
-			}
-		});	
+        center.setOnDragOver(DragDropUtil.createOnDragOverEvent(() -> (String) center.getUserData()));	
         
-        center.setOnDragDropped(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-                Dragboard db = event.getDragboard();
-                String drop = db.getString();
-                if(drop != null) {
-                	String key = getKey(drop);
-                	int value = Integer.parseInt(drop.split(":")[1]);
-                	
-                	FileWrapper file = key.equals("c") ? cList.get(value) : sList.get(value);
-                	
-                	if(center.getUserData() == null) {
-                		currentSoundLabel.setText("currentSound=" + file.toString());
-                		center.setUserData(drop);
-                	} else {
-                		String userData = (String) center.getUserData();
-                    	String key2 = getKey(userData);
-                    	int value2 = Integer.parseInt(userData.split(":")[1]);
-                		FileWrapper file2 = key2.equals("c") ? cList.get(value2) : sList.get(value2);
-                		
-                		if(!key.equals(key2)) {
-                			if(key.equals("s")) {
-	                			mList.add(new CSMapping(file , file2));
-	                		} else {
-	                			mList.add(new CSMapping(file2 , file));
-	                		}
-	                		center.setUserData(null);
-                		}
-                	}
-                }
-                event.setDropCompleted(drop != null);
-                event.consume();				
-			}
-		});
+        center.setOnDragDropped(DragDropUtil.createOnDragEvent(cList, sList, center, mList));
         
-        center.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				if(e.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-					if(e.getClickCount() == 2) {
-						
-					}
-				}			
-			}
-		});
         
         Button crusaderSourceDirButton = new Button("set crusader src");
         crusaderSourceDirButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -204,7 +102,7 @@ public class CrusaderMapper extends Application {
                 } else {
                 	String msg = "cant set " + file + " as source dir";
                 	System.out.println(msg);
-                	showAlert(msg, null);
+                	UI_Util.showAlert(msg, null);
                 }
 			}
 		});
@@ -226,7 +124,7 @@ public class CrusaderMapper extends Application {
                 } else {
                 	String msg = "cant set " + file + " as source dir";
                 	System.out.println(msg);
-                	showAlert(msg, null);
+                	UI_Util.showAlert(msg, null);
                 }
 			}
 		});
@@ -251,11 +149,11 @@ public class CrusaderMapper extends Application {
 					out.write(content.getBytes());
 					out.flush();
 					out.close();
-					showAlert("config saved: " + f.getAbsolutePath(), AlertType.INFORMATION, null);
+					UI_Util.showAlert("config saved: " + f.getAbsolutePath(), AlertType.INFORMATION, null);
 				} catch (FileNotFoundException e) {
-					showAlert("file not found while safing config", e);
+					UI_Util.showAlert("file not found while safing config", e);
 				} catch (IOException e) {
-					showAlert("io problem while safing config", e);
+					UI_Util.showAlert("io problem while safing config", e);
 				}
         		
         	}
@@ -279,16 +177,16 @@ public class CrusaderMapper extends Application {
 							if(s.length == 2) {
 								mList.add(new CSMapping(new FileWrapper(new File(s[0])), new FileWrapper(new File(s[1]))));
 							} else {
-								showAlert("cant read line: " + line, null);
+								UI_Util.showAlert("cant read line: " + line, null);
 								mList.clear();
 								return;
 							}
 						}
 					} catch (FileNotFoundException e) {
-						showAlert("file not found while loading config", e);
+						UI_Util.showAlert("file not found while loading config", e);
 						e.printStackTrace();
 					} catch (IOException e) {
-						showAlert("io problem while loading config", e);
+						UI_Util.showAlert("io problem while loading config", e);
 						e.printStackTrace();
 					} finally {
 						if(in != null)
@@ -330,7 +228,7 @@ public class CrusaderMapper extends Application {
 							
 							if(f1.exists()) {
 								if(f2.createNewFile()) {
-									copyFile(f1, f2);
+									FileUtil.copyFile(f1, f2);
 								} else {
 									allErrors += "outputfile " + f2 + " already existed!\n";
 								}
@@ -338,20 +236,20 @@ public class CrusaderMapper extends Application {
 								allErrors += "inputfile " + f1 + " doesnt exist!\n";
 							}
 						} catch(Exception e) {
-							showAlert("exception while copying: " + f1 + " -> " + f2, e);
+							UI_Util.showAlert("exception while copying: " + f1 + " -> " + f2, e);
 							allErrors += "unknown error while copying: " + f1 + "\n";
 							e.printStackTrace();
 						}
 					}
 					if(!allErrors.isEmpty()) {
-						showAlert("following files where not copied:\n" + allErrors, null);
+						UI_Util.showAlert("following files where not copied:\n" + allErrors, null);
 					} else {
-						showAlert("done, no errors :)", AlertType.INFORMATION, null);
+						UI_Util.showAlert("done, no errors :)", AlertType.INFORMATION, null);
 					}
 				} else {
 					String msg = "failed to create dir: " + mappedSoundsDir;
 					System.err.println(msg);
-					showAlert(msg, null);
+					UI_Util.showAlert(msg, null);
 				}
 			}
 		});
@@ -376,6 +274,19 @@ public class CrusaderMapper extends Application {
         root.prefHeightProperty().bind(stage.heightProperty());	
         
         stage.show();
+	}
+
+	private ListView<FileWrapper> initListView(ObservableList<FileWrapper> sourceList, String key) {
+		ListView<FileWrapper> listView = new ListView<FileWrapper>(sourceList);
+		listView.setOnMouseClicked(SoundUtil.createSoundEventHandler(
+				() -> listView.getSelectionModel().getSelectedItem().getFile())
+			);
+		
+		listView.setOnDragDetected(DragDropUtil.createDragSourceHandler(
+				() -> listView.startDragAndDrop(TransferMode.ANY), 
+				() -> key + ":" + listView.getSelectionModel().getSelectedIndex())
+			);
+		return listView;
 	}
 
 	/**
@@ -416,7 +327,7 @@ public class CrusaderMapper extends Application {
 
 	private File checkDirSet(Stage stage, File dir, String msg) {
 		if(dir == null || !dir.isDirectory()) {
-			showAlert(msg, null);
+			UI_Util.showAlert(msg, null);
 	        DirectoryChooser dirChooser = new DirectoryChooser();
 	        dir = checkDirSet(stage, dirChooser.showDialog(stage), msg);
 		}
@@ -454,56 +365,8 @@ public class CrusaderMapper extends Application {
 	}
 	
 	
-	private static void playSound(File audioFile) {
-	    try {
-	    	System.out.println("playing: " + audioFile.getAbsolutePath());
-			Runtime.getRuntime().exec("C:\\Program Files (x86)\\Windows Media Player\\wmplayer.exe /play \"" + audioFile.getAbsolutePath() + "\"");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-	}
-	
-	 public static void copyFile(File sourceFile, File destFile) throws IOException {
-	     if(!destFile.exists()) {
-	      destFile.createNewFile();
-	     }
 
-	     RandomAccessFile source = null;
-	     RandomAccessFile destination = null;
-	     try {
-	    	 source = new RandomAccessFile(sourceFile,"rw");
-	    	 destination =new RandomAccessFile(destFile,"rw");
 
-	      long position = 0;
-	      long count    = source.getChannel().size();
-
-	      source.getChannel().transferTo(position, count, destination.getChannel());
-	     }
-	     finally {
-	      if(source != null) {
-	       source.close();
-	      }
-	      if(destination != null) {
-	       destination.close();
-	      }
-	    }
-	 }
-	
-	private static String getKey(String s) {
-		return s.contains(":") ? s.split(":")[0] : "";
-	}
-	
-	 public static void showAlert(String msg, Exception e) {
-		 showAlert(msg, AlertType.ERROR, e);
-	 }
-	 
-	 public static void showAlert(String msg, AlertType type, Exception e) {
-		 Alert alert = new Alert(type);
-		 alert.setTitle(type.name());
-		 alert.setHeaderText(msg == null ? "No message available" : msg);
-		 alert.setContentText(e == null ? type.equals(AlertType.ERROR) ? "No exception information available" : "" : e.toString());
-		 alert.showAndWait();
-	 }
 
 }
