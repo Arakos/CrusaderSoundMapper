@@ -9,10 +9,14 @@ import javafx.scene.input.MouseEvent;
 
 public class SoundUtil {
 	public static void playSound(File audioFile) {
+		playSound(audioFile.getAbsolutePath());
+	}
+
+	public static void playSound(String audioFile) {
 		try {
-			System.out.println("playing: " + audioFile.getAbsolutePath());
+			System.out.println("playing: " + audioFile);
 			Runtime.getRuntime().exec("cmd /c \"\"%ProgramFiles(x86)%\\Windows Media Player\\wmplayer.exe\" /play \""
-					+ audioFile.getAbsolutePath() + "\"\"");
+					+ audioFile + "\"\"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -22,10 +26,8 @@ public class SoundUtil {
 		return new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				if (e.getEventType().equals(MouseEvent.MOUSE_CLICKED)) {
-					if (e.getClickCount() == 2) {
-						playSound(soundfileSup.get());
-					}
+				if (e.getEventType().equals(MouseEvent.MOUSE_CLICKED) && e.getClickCount() == 2) {
+					playSound(soundfileSup.get());
 				}
 			}
 		};

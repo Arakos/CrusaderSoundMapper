@@ -8,9 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
+import crusader.mapper.fragments.MapperListView;
 import crusader.mapper.util.DragDropUtil;
 import crusader.mapper.util.FileUtil;
-import crusader.mapper.util.SoundUtil;
 import crusader.mapper.util.UI_Util;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -22,7 +22,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -67,8 +66,8 @@ public class CrusaderMapper extends Application {
 		Label sDirLabel = new Label("sdir=" + sDir.getAbsolutePath());
 		HBox bottom = new HBox(5, cDirLabel, sDirLabel, currentSoundLabel);
 
-		ListView<FileWrapper> cView = initListView(cList, "c");
-		ListView<FileWrapper> sView = initListView(sList, "s");
+		MapperListView<FileWrapper> cView = new MapperListView<FileWrapper>(cList, item -> item.getFile());
+		MapperListView<FileWrapper> sView = new MapperListView<FileWrapper>(sList, item -> item.getFile());
 
 		ListView<CSMapping> center = new ListView<CSMapping>(mList);
 		center.setOnDragOver(DragDropUtil.createOnDragOverEvent(() -> (String) center.getUserData()));
@@ -264,17 +263,6 @@ public class CrusaderMapper extends Application {
 		root.prefHeightProperty().bind(stage.heightProperty());
 
 		stage.show();
-	}
-
-	private ListView<FileWrapper> initListView(ObservableList<FileWrapper> sourceList, String key) {
-		ListView<FileWrapper> listView = new ListView<FileWrapper>(sourceList);
-		listView.setOnMouseClicked(
-				SoundUtil.createSoundEventHandler(() -> listView.getSelectionModel().getSelectedItem().getFile()));
-
-		listView.setOnDragDetected(
-				DragDropUtil.createDragSourceHandler(() -> listView.startDragAndDrop(TransferMode.ANY),
-						() -> key + ":" + listView.getSelectionModel().getSelectedIndex()));
-		return listView;
 	}
 
 	/**
