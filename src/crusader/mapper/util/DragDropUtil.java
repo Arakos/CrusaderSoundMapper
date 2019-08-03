@@ -8,6 +8,7 @@ import crusader.mapper.FileWrapper;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -52,7 +53,7 @@ public class DragDropUtil {
 		};
 	}
 	
-	public static EventHandler<DragEvent> createOnDragEvent(ObservableList<FileWrapper> cList, ObservableList<FileWrapper> sList, ListView<CSMapping> center, ObservableList<CSMapping> mList) {
+	public static EventHandler<DragEvent> createOnDragEvent(ObservableList<FileWrapper> cList, ObservableList<FileWrapper> sList, ListView<CSMapping> center, ObservableList<CSMapping> mList, Label currentSoundLabel) {
 		return new EventHandler<DragEvent>() {
 
 			@Override
@@ -66,13 +67,13 @@ public class DragDropUtil {
                 	FileWrapper file = key.equals("c") ? cList.get(value) : sList.get(value);
                 	
                 	if(center.getUserData() == null) {
-//                		currentSoundLabel.setText("currentSound=" + file.toString());
+                		currentSoundLabel.setText("currentSound=" + file.toString());
                 		center.setUserData(drop);
                 	} else {
                 		String userData = (String) center.getUserData();
                     	String key2 = getKey(userData);
                     	int value2 = Integer.parseInt(userData.split(":")[1]);
-                		FileWrapper file2 = key.equals("c") ? cList.get(value) : sList.get(value);
+                		FileWrapper file2 = key.equals("c") ? cList.get(value2) : sList.get(value2);
                 		
                 		if(!key.equals(key2)) {
                 			if(key.equals("s")) {

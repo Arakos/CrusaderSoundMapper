@@ -82,7 +82,7 @@ public class CrusaderMapper extends Application {
 		ListView<CSMapping> center = new ListView<CSMapping>(mList);
         center.setOnDragOver(DragDropUtil.createOnDragOverEvent(() -> (String) center.getUserData()));	
         
-        center.setOnDragDropped(DragDropUtil.createOnDragEvent(cList, sList, center, mList));
+        center.setOnDragDropped(DragDropUtil.createOnDragEvent(cList, sList, center, mList, currentSoundLabel));
         
         
         Button crusaderSourceDirButton = new Button("set crusader src");
