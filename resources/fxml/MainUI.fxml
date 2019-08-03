@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<TabPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="crusader.mapper.controler.MainControler">
+   <tabs>
+      <Tab closable="false" text="Tab1">
+         <content>
+            <SplitPane dividerPositions="0.29797979797979796">
+              <items>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="808.0" prefWidth="176.0">
+                    <items>
+                        <ListView fx:id="topleftlist" />
+                        <ListView fx:id="bottomleftlist" />
+                    </items>
+                  </SplitPane>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                    <items>
+                        <Pane prefHeight="200.0" prefWidth="200.0" />
+                        <ToolBar>
+                          <items>
+                            <Button fx:id="testbtn" mnemonicParsing="false" text="Test" />
+                          </items>
+                        </ToolBar>
+                    </items>
+                  </SplitPane>
+              </items>
+            </SplitPane>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>

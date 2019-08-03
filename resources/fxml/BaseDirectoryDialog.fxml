@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<TitledPane animated="false" collapsible="false" text="Set up your environment" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="crusader.mapper.controler.DAOController">
+   <content>
+      <VBox>
+         <children>
+            <VBox>
+               <children>
+                  <Label text="Select Stronghold Crusader Directory:" />
+                  <HBox>
+                     <children>
+                        <TextField fx:id="baseDirValue" />
+                        <Button fx:id="baseDirBtn" mnemonicParsing="false" text="Button" />
+                     </children>
+                  </HBox>
+                  <Label text="Select Working Directory:" />
+               </children>
+            </VBox>
+            <HBox>
+               <children>
+                  <TextField fx:id="workDirValue" />
+                  <Button fx:id="workDirBtn" mnemonicParsing="false" text="Button" />
+               </children>
+            </HBox>
+            <Button fx:id="okbtn" mnemonicParsing="false" text="OK" />
+         </children>
+      </VBox>
+   </content>
+</TitledPane>
