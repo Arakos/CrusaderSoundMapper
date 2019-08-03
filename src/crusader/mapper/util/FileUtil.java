@@ -5,30 +5,29 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class FileUtil {
-	
-	 public static void copyFile(File sourceFile, File destFile) throws IOException {
-	     if(!destFile.exists()) {
-	      destFile.createNewFile();
-	     }
 
-	     RandomAccessFile source = null;
-	     RandomAccessFile destination = null;
-	     try {
-	    	 source = new RandomAccessFile(sourceFile,"rw");
-	    	 destination =new RandomAccessFile(destFile,"rw");
+	public static void copyFile(File sourceFile, File destFile) throws IOException {
+		if (!destFile.exists()) {
+			destFile.createNewFile();
+		}
 
-	      long position = 0;
-	      long count    = source.getChannel().size();
+		RandomAccessFile source = null;
+		RandomAccessFile destination = null;
+		try {
+			source = new RandomAccessFile(sourceFile, "rw");
+			destination = new RandomAccessFile(destFile, "rw");
 
-	      source.getChannel().transferTo(position, count, destination.getChannel());
-	     }
-	     finally {
-	      if(source != null) {
-	       source.close();
-	      }
-	      if(destination != null) {
-	       destination.close();
-	      }
-	    }
-	 }
+			long position = 0;
+			long count = source.getChannel().size();
+
+			source.getChannel().transferTo(position, count, destination.getChannel());
+		} finally {
+			if (source != null) {
+				source.close();
+			}
+			if (destination != null) {
+				destination.close();
+			}
+		}
+	}
 }
