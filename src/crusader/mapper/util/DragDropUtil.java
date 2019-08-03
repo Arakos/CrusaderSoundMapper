@@ -43,7 +43,8 @@ public class DragDropUtil {
 			public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.getString() != null) {
-                	if(!(getKey(db.getString()).equals(getKey(dataSup.get())))) {
+                	String data = dataSup.get() == null ? "" : dataSup.get();
+                	if(!(getKey(db.getString()).equals(getKey(data)))) {
                         event.acceptTransferModes(TransferMode.COPY);
                 	}
                 } else {

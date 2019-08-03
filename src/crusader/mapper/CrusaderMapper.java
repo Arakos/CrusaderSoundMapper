@@ -80,7 +80,7 @@ public class CrusaderMapper extends Application {
 		ListView<FileWrapper> sView = initListView(sList, "s");
 		
 		ListView<CSMapping> center = new ListView<CSMapping>(mList);
-        center.setOnDragOver(DragDropUtil.createOnDragOverEvent(() -> (String) center.getUserData()));	
+        center.setOnDragOver(DragDropUtil.createOnDragOverEvent(() -> (String) center.getUserData()));
         
         center.setOnDragDropped(DragDropUtil.createOnDragEvent(cList, sList, center, mList, currentSoundLabel));
         
