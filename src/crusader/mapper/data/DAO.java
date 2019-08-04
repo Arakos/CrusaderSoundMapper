@@ -1,7 +1,10 @@
 package crusader.mapper.data;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.prefs.Preferences;
@@ -113,6 +116,15 @@ public class DAO {
 
 	public void setWorkingDir(File workingBaseDir) {
 		this.workingBaseDir = workingBaseDir;
+	}
+
+	public List<File> getCrusaderSoundFiles() {
+		File f = new File(crusaderBaseDir.getAbsolutePath() + File.separatorChar + C_SPEECH_PATH);
+		List<File> result = new ArrayList<>();
+		for (File sound : f.listFiles(s -> s.getName().endsWith(EXTENSION))) {
+			result.add(sound);
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 }

@@ -1,9 +1,11 @@
 package crusader.mapper.controler;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
+import crusader.mapper.data.DAO;
+import crusader.mapper.data.model.CrusaderSound;
 import crusader.mapper.ui.fragments.SoundEntryFragment;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -32,8 +34,9 @@ public class MainControler implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		topleftlist.setItems(FXCollections.observableArrayList(Arrays.asList("a", "b")));
-		bottomleftlist.setItems(FXCollections.observableArrayList(Arrays.asList("c", "d")));
+		topleftlist.setItems(FXCollections.observableArrayList(DAO.getInstance().getCrusaderSoundFiles().stream()
+				.map(file -> new CrusaderSound(file)).collect(Collectors.toList())));
+
 		topleftlist.setOnMouseClicked(e -> {
 			VBox fragmentRoot = new SoundEntryFragment(contentVbox,
 					new SoundEntryController(topleftlist.getSelectionModel().getSelectedItem().toString()))
