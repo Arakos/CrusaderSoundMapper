@@ -14,7 +14,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage mainStage) {
 		try {
-
 			TabPane root = (TabPane) FXMLLoader.load(getClass().getResource("/fxml/MainUI.fxml"));
 			UI_Util.setOnStage(mainStage, root, false);
 
@@ -28,6 +27,10 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		for(int i = 0; i < args.length - 1; i+=2) {
+			boolean ok = DAO.setGlobalPref(args[i], args[i+1]);
+			System.out.println("Setpref: " + args[i] + "=" + args[i+1] + " -> " + ok);
+		}
 		launch(args);
 	}
 

@@ -72,10 +72,12 @@ public class DAO {
 		return predicateMap.containsKey(key) && predicateMap.get(key).test(value);
 	}
 
-	public static final void setGlobalPref(String key, String value) {
-		if (checkPrefValid(key, value)) {
+	public static final boolean setGlobalPref(String key, String value) {
+		boolean valid = checkPrefValid(key, value);
+		if (valid) {
 			DAO_PREFS.put(key, value);
 		}
+		return valid;
 	}
 
 	public static final String getGlobalPref(String key) {
