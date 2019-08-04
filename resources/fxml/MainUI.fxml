@@ -20,7 +20,7 @@
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" orientation="VERTICAL">
                     <items>
-                        <Pane prefHeight="200.0" prefWidth="200.0" />
+                        <VBox fx:id="contentVbox" prefHeight="200.0" prefWidth="100.0" />
                         <ToolBar>
                           <items>
                             <Button fx:id="testbtn" mnemonicParsing="false" text="Test" />

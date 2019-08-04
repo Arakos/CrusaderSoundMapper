@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root type="VBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <HBox>
+         <children>
+            <Label text="Original Sound" />
+            <Label text="Replacement" />
+         </children>
+      </HBox>
+      <HBox>
+         <children>
+            <Label fx:id="origSound" text="SoundnameO" />
+            <Label fx:id="replacedSound" text="SoundnameR" />
+         </children>
+      </HBox>
+   </children>
+</fx:root>

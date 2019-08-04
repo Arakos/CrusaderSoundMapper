@@ -42,7 +42,8 @@ public class BaseDirectoryDialogController implements Initializable {
 
 	public static void openBaseDirChooserDialg() {
 		try {
-			Region baseDirDialog = FXMLLoader.load(DAO.class.getResource("/fxml/BaseDirectoryDialog.fxml"));
+			Region baseDirDialog = FXMLLoader
+					.load(BaseDirectoryDialogController.class.getResource("/fxml/BaseDirectoryDialog.fxml"));
 			Stage subStage = new Stage();
 			subStage.initModality(Modality.APPLICATION_MODAL);
 			UI_Util.setOnStage(subStage, baseDirDialog, true);
