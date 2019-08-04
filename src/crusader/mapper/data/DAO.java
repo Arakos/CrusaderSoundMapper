@@ -52,8 +52,8 @@ public class DAO {
 			throw new IllegalStateException(
 					"DAO not initializeable! CrusaderDir: " + crusaderBaseDir + " | WorkDir: " + workingBaseDir);
 		}
-		crusaderBaseDir = new File(DAO_PREFS.get(WORKING_DIR_PREF_KEY, null));
-		workingBaseDir = new File(DAO_PREFS.get(CRUSADER_PATH_PREF_KEY, null));
+		crusaderBaseDir = new File(DAO_PREFS.get(CRUSADER_PATH_PREF_KEY, null));
+		workingBaseDir = new File(DAO_PREFS.get(WORKING_DIR_PREF_KEY, null));
 	}
 
 	public static boolean isInitializeable() {
