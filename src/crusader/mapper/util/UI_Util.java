@@ -1,10 +1,13 @@
 package crusader.mapper.util;
 
+import java.io.File;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.Region;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class UI_Util {
@@ -23,7 +26,7 @@ public class UI_Util {
 		alert.showAndWait();
 	}
 
-	public static void setOnStage(Stage stage, Region root) {
+	public static void setOnStage(Stage stage, Region root, boolean showAndWait) {
 
 		root.prefWidthProperty().bind(stage.widthProperty());
 		root.prefHeightProperty().bind(stage.heightProperty());
@@ -33,7 +36,22 @@ public class UI_Util {
 
 		stage.setScene(scene);
 		stage.hide();
-		stage.show();
+		if (showAndWait) {
+			stage.showAndWait();
+		} else {
+			stage.show();
+		}
+	}
+
+	public static File openFileDialog(String baseFileStr, String title) {
+		File baseDir = null;
+		if (baseFileStr != null) {
+			baseDir = new File(baseFileStr);
+		}
+		DirectoryChooser dirChooser = new DirectoryChooser();
+		dirChooser.setInitialDirectory(baseDir != null && baseDir.exists() && baseDir.isDirectory() ? baseDir : null);
+		dirChooser.setTitle(title);
+		return dirChooser.showDialog(null);
 	}
 
 }

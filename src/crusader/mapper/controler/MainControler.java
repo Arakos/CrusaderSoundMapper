@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -24,7 +22,6 @@ public class MainControler implements Initializable {
 	private Button testbtn;
 
 	public MainControler() {
-		// TODO Auto-generated constructor stub
 		System.out.println("main controller");
 	}
 
@@ -32,11 +29,8 @@ public class MainControler implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		topleftlist.setItems(FXCollections.observableArrayList(Arrays.asList("a", "b")));
 		bottomleftlist.setItems(FXCollections.observableArrayList(Arrays.asList("c", "d")));
-		testbtn.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("TEstbutton");
-			}
+		testbtn.setOnAction(event -> {
+			BaseDirectoryDialogController.openBaseDirChooserDialg();
 		});
 	}
 

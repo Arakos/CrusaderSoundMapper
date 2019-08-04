@@ -1,6 +1,7 @@
 package crusader.mapper.ui.main;
 
-import crusader.mapper.controler.DAOController;
+import crusader.mapper.controler.BaseDirectoryDialogController;
+import crusader.mapper.data.DAO;
 import crusader.mapper.util.UI_Util;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,14 +10,17 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
 	@Override
-	public void start(Stage stage) {
+	public void start(Stage mainStage) {
 		try {
 
 			TabPane root = (TabPane) FXMLLoader.load(getClass().getResource("/fxml/MainUI.fxml"));
-			UI_Util.setOnStage(stage, root);
+			UI_Util.setOnStage(mainStage, root, false);
 
-			DAOController.ensureDAOInitializable(stage);
+			while (!DAO.isInitializeable()) {
+				BaseDirectoryDialogController.openBaseDirChooserDialg();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

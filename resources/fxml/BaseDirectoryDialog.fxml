@@ -6,26 +6,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 
-<TitledPane animated="false" collapsible="false" text="Set up your environment" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="crusader.mapper.controler.DAOController">
+<TitledPane animated="false" collapsible="false" minHeight="200.0" minWidth="500.0" text="Set up your environment" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="crusader.mapper.controler.BaseDirectoryDialogController">
    <content>
       <VBox>
          <children>
-            <VBox>
+            <Label fx:id="invcrusaderdirtext" text="Invalid Directory Specified!" textFill="RED" visible="false" />
+            <Label text="Select Stronghold Crusader Directory:" />
+            <VBox VBox.vgrow="ALWAYS">
                <children>
-                  <Label text="Select Stronghold Crusader Directory:" />
                   <HBox>
                      <children>
-                        <TextField fx:id="baseDirValue" />
-                        <Button fx:id="baseDirBtn" mnemonicParsing="false" text="Button" />
+                        <TextField fx:id="baseDirValue" editable="false" />
+                        <Button fx:id="baseDirBtn" mnemonicParsing="false" text="Browse ..." />
                      </children>
                   </HBox>
-                  <Label text="Select Working Directory:" />
                </children>
             </VBox>
-            <HBox>
+            <Label fx:id="invworkdirtext" text="Invalid Directory Specified!" textFill="RED" visible="false" />
+            <Label text="Select Working Directory:" />
+            <HBox VBox.vgrow="ALWAYS">
                <children>
-                  <TextField fx:id="workDirValue" />
-                  <Button fx:id="workDirBtn" mnemonicParsing="false" text="Button" />
+                  <TextField fx:id="workDirValue" editable="false" />
+                  <Button fx:id="workDirBtn" mnemonicParsing="false" text="Browse ..." />
                </children>
             </HBox>
             <Button fx:id="okbtn" mnemonicParsing="false" text="OK" />
