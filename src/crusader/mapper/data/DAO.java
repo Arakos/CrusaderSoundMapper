@@ -9,14 +9,16 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.prefs.Preferences;
 
+import crusader.mapper.data.model.CrusaderSound;
+
 public class DAO {
 
 	public static final String CRUSADER_PATH_PREF_KEY = "cursader_base_path";
 	public static final String WORKING_DIR_PREF_KEY = "working_dir_path";
 
-	private static final String C_SPEECH_PATH = "fx" + File.separatorChar + "speech";
+	public static final String C_SPEECH_PATH = "fx" + File.separatorChar + "speech";
 
-	private static final String EXTENSION = "wav";
+	public static final String EXTENSION = "wav";
 
 	// singleton
 	private static DAO instace;
@@ -118,11 +120,11 @@ public class DAO {
 		this.workingBaseDir = workingBaseDir;
 	}
 
-	public List<File> getCrusaderSoundFiles() {
+	public List<CrusaderSound> getCrusaderSoundFiles() {
 		File f = new File(crusaderBaseDir.getAbsolutePath() + File.separatorChar + C_SPEECH_PATH);
-		List<File> result = new ArrayList<>();
+		List<CrusaderSound> result = new ArrayList<>();
 		for (File sound : f.listFiles(s -> s.getName().endsWith(EXTENSION))) {
-			result.add(sound);
+			result.add(new CrusaderSound(sound));
 		}
 		return Collections.unmodifiableList(result);
 	}

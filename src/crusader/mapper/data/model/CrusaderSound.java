@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class CrusaderSound {
-
-	File source;
+public class CrusaderSound extends SoundFile {
 
 	private static final Map<Integer, String> ORDER = new HashMap<>();
 
@@ -21,9 +19,13 @@ public class CrusaderSound {
 
 	private Map<String, String> valueMap = new HashMap<>();
 
-	public CrusaderSound(File source) {
-		this.source = source;
-		String[] split = source.getName().split("_|\\.");
+	public CrusaderSound(File sound) {
+		this(sound.getAbsolutePath());
+	}
+
+	public CrusaderSound(String path) {
+		super(path);
+		String[] split = this.getName().split("_|\\.");
 		for (int i = 0; i < split.length - 1; i++) {
 			valueMap.put(ORDER.get(i), split[i]);
 		}

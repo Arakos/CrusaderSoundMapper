@@ -2,7 +2,6 @@ package crusader.mapper.controler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import crusader.mapper.data.DAO;
 import crusader.mapper.data.model.CrusaderSound;
@@ -17,7 +16,7 @@ import javafx.scene.layout.VBox;
 public class MainControler implements Initializable {
 
 	@FXML
-	private ListView<Object> topleftlist;
+	private ListView<CrusaderSound> topleftlist;
 
 	@FXML
 	private ListView<Object> bottomleftlist;
@@ -28,19 +27,16 @@ public class MainControler implements Initializable {
 	@FXML
 	private VBox contentVbox;
 
-	public MainControler() {
-		System.out.println("main controller");
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		topleftlist.setItems(FXCollections.observableArrayList(DAO.getInstance().getCrusaderSoundFiles().stream()
-				.map(file -> new CrusaderSound(file)).collect(Collectors.toList())));
+		topleftlist.setItems(FXCollections.observableArrayList(DAO.getInstance().getCrusaderSoundFiles()));
 
 		topleftlist.setOnMouseClicked(e -> {
-			VBox fragmentRoot = new SoundEntryFragment(contentVbox,
-					new SoundEntryController(topleftlist.getSelectionModel().getSelectedItem().toString()))
-							.createFragment();
+			CrusaderSound selectedSound = topleftlist.getSelectionModel().getSelectedItem();
+			if (e.getClickCount() == 1) {
+				VBox fragmentRoot = new SoundEntryFragment(contentVbox, new SoundEntryController(selectedSound))
+						.createFragment();
+			}
 		});
 		testbtn.setOnAction(event -> {
 			BaseDirectoryDialogController.openBaseDirChooserDialg();

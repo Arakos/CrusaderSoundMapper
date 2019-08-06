@@ -3,29 +3,28 @@ package crusader.mapper.controler;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import crusader.mapper.data.model.CrusaderSound;
+import crusader.mapper.data.model.SoundFile;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 public class SoundEntryController implements Initializable {
 
-	String entry = "NONE";
+	private final SoundFile soundEntry;
 
 	@FXML
 	private Label origSound, replacedSound;
 
-	public SoundEntryController() {
-	}
-
-	public SoundEntryController(String test) {
-		entry = test;
+	public SoundEntryController(CrusaderSound soundEntry) {
+		this.soundEntry = soundEntry;
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("controlling sound entry: " + entry);
-		origSound.setText("Orig: " + entry);
-		replacedSound.setText("Replaced: " + entry);
+		System.out.println("controlling sound entry: " + soundEntry);
+		origSound.setText("Orig: " + soundEntry);
+		replacedSound.setText("Replaced: " + soundEntry);
 	}
 
 }
