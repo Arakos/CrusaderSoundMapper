@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import crusader.mapper.data.DAO;
 import crusader.mapper.data.model.CrusaderSound;
 import crusader.mapper.ui.fragments.SoundEntryFragment;
+import crusader.mapper.util.SoundUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,6 +37,8 @@ public class MainControler implements Initializable {
 			if (e.getClickCount() == 1) {
 				VBox fragmentRoot = new SoundEntryFragment(contentVbox, new SoundEntryController(selectedSound))
 						.createFragment();
+			} else if (e.getClickCount() == 2) {
+				SoundUtil.playSound(selectedSound);
 			}
 		});
 		testbtn.setOnAction(event -> {
