@@ -1,4 +1,4 @@
-package crusader.mapper;
+package crusader.mapper.old;
 
 public class CSMapping {
 

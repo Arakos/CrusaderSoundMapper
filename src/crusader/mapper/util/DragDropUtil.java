@@ -2,8 +2,8 @@ package crusader.mapper.util;
 
 import java.util.function.Supplier;
 
-import crusader.mapper.CSMapping;
-import crusader.mapper.FileWrapper;
+import crusader.mapper.old.CSMapping;
+import crusader.mapper.old.FileWrapper;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;

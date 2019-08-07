@@ -1,4 +1,4 @@
-package crusader.mapper;
+package crusader.mapper.old;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
-import crusader.mapper.fragments.MapperListView;
 import crusader.mapper.util.DragDropUtil;
 import crusader.mapper.util.FileUtil;
 import crusader.mapper.util.UI_Util;
