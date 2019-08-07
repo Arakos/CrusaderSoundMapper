@@ -8,10 +8,18 @@ public abstract class BaseFragment<T> implements Fragment<T> {
 
 	protected final FXMLLoader loader;
 
+	protected BaseFragment(Parent root) {
+		this(root, null);
+	}
+
 	protected BaseFragment(Parent root, Object controller) {
 		this.loader = new FXMLLoader(SoundEntryController.class.getResource(getResourceFXML()));
-		loader.setController(controller);
-		loader.setRoot(root);
+		if (controller != null) {
+			loader.setController(controller);
+		}
+		if (root != null) {
+			loader.setRoot(root);
+		}
 	}
 
 	protected abstract String getResourceFXML();

@@ -2,12 +2,14 @@ package crusader.mapper.util;
 
 import java.io.File;
 
+import crusader.mapper.ui.fragments.Fragment;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class UI_Util {
@@ -24,6 +26,16 @@ public class UI_Util {
 		alert.setContentText(
 				e == null ? type.equals(AlertType.ERROR) ? "No exception information available" : "" : e.toString());
 		alert.showAndWait();
+	}
+
+	public static void openInNewWindow(Fragment<? extends Region> root) {
+		openInNewWindow(root.createFragment());
+	}
+
+	public static void openInNewWindow(Region root) {
+		Stage newStage = new Stage();
+		newStage.initModality(Modality.APPLICATION_MODAL);
+		setOnStage(newStage, root, true);
 	}
 
 	public static void setOnStage(Stage stage, Region root, boolean showAndWait) {

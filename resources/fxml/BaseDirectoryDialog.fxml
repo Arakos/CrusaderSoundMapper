@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 
-<TitledPane animated="false" collapsible="false" minHeight="200.0" minWidth="500.0" text="Set up your environment" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="crusader.mapper.controler.BaseDirectoryDialogController">
+<fx:root type="TitledPane" animated="false" collapsible="false" minHeight="200.0" minWidth="500.0" text="Set up your environment" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox>
          <children>
@@ -34,4 +34,4 @@
          </children>
       </VBox>
    </content>
-</TitledPane>
+</fx:root>

@@ -1,7 +1,7 @@
 package crusader.mapper.ui.main;
 
-import crusader.mapper.controler.BaseDirectoryDialogController;
 import crusader.mapper.data.DAO;
+import crusader.mapper.ui.fragments.BaseDirectoryChooserFragment;
 import crusader.mapper.util.UI_Util;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +18,7 @@ public class Main extends Application {
 			UI_Util.setOnStage(mainStage, root, false);
 
 			while (!DAO.isInitializeable()) {
-				BaseDirectoryDialogController.openBaseDirChooserDialg();
+				UI_Util.openInNewWindow(new BaseDirectoryChooserFragment());
 			}
 
 		} catch (Exception e) {
@@ -27,9 +27,9 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-		for(int i = 0; i < args.length - 1; i+=2) {
-			boolean ok = DAO.setGlobalPref(args[i], args[i+1]);
-			System.out.println("Setpref: " + args[i] + "=" + args[i+1] + " -> " + ok);
+		for (int i = 0; i < args.length - 1; i += 2) {
+			boolean ok = DAO.setGlobalPref(args[i], args[i + 1]);
+			System.out.println("Setpref: " + args[i] + "=" + args[i + 1] + " -> " + ok);
 		}
 		launch(args);
 	}

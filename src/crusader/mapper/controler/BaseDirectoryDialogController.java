@@ -4,53 +4,28 @@ import static crusader.mapper.data.DAO.CRUSADER_PATH_PREF_KEY;
 import static crusader.mapper.data.DAO.WORKING_DIR_PREF_KEY;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import crusader.mapper.data.DAO;
 import crusader.mapper.util.UI_Util;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Region;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class BaseDirectoryDialogController implements Initializable {
 
 	@FXML
-	private TextField baseDirValue;
-
-	@FXML
-	private TextField workDirValue;
+	private TextField baseDirValue, workDirValue;
 
 	@FXML
 	private Label invcrusaderdirtext, invworkdirtext;
 
 	@FXML
-	private Button baseDirBtn;
-
-	@FXML
-	private Button workDirBtn;
-
-	@FXML
-	private Button okbtn;
-
-	public static void openBaseDirChooserDialg() {
-		try {
-			Region baseDirDialog = FXMLLoader
-					.load(BaseDirectoryDialogController.class.getResource("/fxml/BaseDirectoryDialog.fxml"));
-			Stage subStage = new Stage();
-			subStage.initModality(Modality.APPLICATION_MODAL);
-			UI_Util.setOnStage(subStage, baseDirDialog, true);
-		} catch (IOException e) {
-			throw new IllegalStateException("Required resources not accessible!", e);
-		}
-	}
+	private Button baseDirBtn, workDirBtn, okbtn;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
