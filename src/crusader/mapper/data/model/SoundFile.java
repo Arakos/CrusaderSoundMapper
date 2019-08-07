@@ -8,6 +8,9 @@ public class SoundFile extends File {
 
 	public SoundFile(String pathname) {
 		super(pathname);
+		if (!pathname.endsWith(DAO.EXTENSION)) {
+			throw new IllegalArgumentException("Soundfile without '.wav'-Extension specified: " + getAbsolutePath());
+		}
 	}
 
 	@Override
