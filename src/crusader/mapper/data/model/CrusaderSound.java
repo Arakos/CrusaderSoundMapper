@@ -1,43 +1,26 @@
 package crusader.mapper.data.model;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
+
+import crusader.mapper.data.model.SoundTagManager.SOUND_TAGS;
 
 public class CrusaderSound extends SoundFile {
 
-	private static final Map<Integer, String> ORDER = new HashMap<>();
-
-	{
-		ORDER.put(0, "Unit");
-		ORDER.put(1, "Type");
-		ORDER.put(2, "Unknown2");
-		ORDER.put(3, "Unknown3");
-		ORDER.put(4, "Unknown4");
-	}
-
-	private Map<String, String> valueMap = new HashMap<>();
+	final Set<SOUND_TAGS> tags;
 
 	public CrusaderSound(File sound) {
-		this(sound.getAbsolutePath());
+		super(sound);
+		this.tags = SoundTagManager.getSoundTags(sound.getName());
 	}
 
-	public CrusaderSound(String path) {
-		super(path);
-		String[] split = this.getName().split("_|\\.");
-		for (int i = 0; i < split.length - 1; i++) {
-			valueMap.put(ORDER.get(i), split[i]);
-		}
+	public Set<SOUND_TAGS> getTags() {
+		return tags;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (Entry<String, String> entry : valueMap.entrySet()) {
-			sb.append(entry.getKey()).append(": '").append(entry.getValue()).append("'\t");
-		}
-		return sb.toString();
+		return super.toString() + " " + tags + " " + SoundTagManager.getMetaTags(tags);
 	}
 
 }

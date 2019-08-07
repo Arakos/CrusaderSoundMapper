@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 
 import crusader.mapper.data.model.CrusaderSound;
 
@@ -120,13 +121,18 @@ public class DAO {
 		this.workingBaseDir = workingBaseDir;
 	}
 
-	public List<CrusaderSound> getCrusaderSoundFiles() {
+	public List<CrusaderSound> getAllCrusaderSoundFiles() {
 		File f = new File(crusaderBaseDir.getAbsolutePath() + File.separatorChar + C_SPEECH_PATH);
 		List<CrusaderSound> result = new ArrayList<>();
 		for (File sound : f.listFiles(s -> s.getName().endsWith(EXTENSION))) {
 			result.add(new CrusaderSound(sound));
 		}
 		return Collections.unmodifiableList(result);
+	}
+
+	public List<CrusaderSound> getTaggedCrusaderSoundFiles() {
+		return Collections.unmodifiableList(getAllCrusaderSoundFiles().stream()
+				.filter(sound -> !sound.getTags().isEmpty()).collect(Collectors.toList()));
 	}
 
 }

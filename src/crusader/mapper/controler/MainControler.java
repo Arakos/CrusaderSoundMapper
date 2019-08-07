@@ -30,7 +30,7 @@ public class MainControler implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		topleftlist.setItems(FXCollections.observableArrayList(DAO.getInstance().getCrusaderSoundFiles()));
+		topleftlist.setItems(FXCollections.observableArrayList(DAO.getInstance().getTaggedCrusaderSoundFiles()));
 
 		topleftlist.setOnMouseClicked(e -> {
 			CrusaderSound selectedSound = topleftlist.getSelectionModel().getSelectedItem();
@@ -39,7 +39,7 @@ public class MainControler implements Initializable {
 					VBox fragmentRoot = new SoundEntryFragment(contentVbox, new SoundEntryController(selectedSound))
 							.createFragment();
 				} else if (e.getClickCount() == 2) {
-					SoundUtil.playSound(selectedSound);
+					SoundUtil.playSound(selectedSound.getFile());
 				}
 			}
 		});

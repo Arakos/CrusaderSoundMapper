@@ -4,18 +4,32 @@ import java.io.File;
 
 import crusader.mapper.data.DAO;
 
-public class SoundFile extends File {
+public class SoundFile {
+
+	protected final File source;
 
 	public SoundFile(String pathname) {
-		super(pathname);
-		if (!pathname.endsWith(DAO.EXTENSION)) {
-			throw new IllegalArgumentException("Soundfile without '.wav'-Extension specified: " + getAbsolutePath());
+		this(new File(pathname));
+	}
+
+	public SoundFile(File file) {
+		this.source = assertValid(file);
+	}
+
+	private File assertValid(File file) {
+		if (file == null || !file.exists() || !file.getName().endsWith(DAO.EXTENSION)) {
+			throw new IllegalArgumentException("Soundfile not valid: " + file == null ? "<null>" : file.getName());
 		}
+		return file;
 	}
 
 	@Override
 	public String toString() {
-		return this.getName().replace(DAO.EXTENSION, "");
+		return source.getName().replace(DAO.EXTENSION, "");
+	}
+
+	public File getFile() {
+		return source;
 	}
 
 }
