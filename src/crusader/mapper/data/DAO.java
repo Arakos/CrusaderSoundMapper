@@ -11,6 +11,7 @@ import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
 import crusader.mapper.data.model.CrusaderSound;
+import crusader.mapper.data.model.FileWrapper;
 
 public class DAO {
 
@@ -113,8 +114,8 @@ public class DAO {
 		this.crusaderBaseDir = crusaderBaseDir;
 	}
 
-	public File getWorkingDir() {
-		return workingBaseDir;
+	public FileWrapper getWorkingDir() {
+		return new FileWrapper(workingBaseDir);
 	}
 
 	public void setWorkingDir(File workingBaseDir) {
