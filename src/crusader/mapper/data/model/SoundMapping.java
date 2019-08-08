@@ -14,4 +14,18 @@ public class SoundMapping {
 		this.replacements = Arrays.asList(replacements);
 	}
 
+	/**
+	 * @return the origSound
+	 */
+	public CrusaderSound getOrigSound() {
+		return origSound;
+	}
+
+	/**
+	 * @return the replacements
+	 */
+	public List<FileWrapper> getReplacements() {
+		return replacements;
+	}
+
 }
