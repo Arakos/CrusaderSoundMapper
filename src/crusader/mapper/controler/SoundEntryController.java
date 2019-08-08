@@ -4,14 +4,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import crusader.mapper.data.model.CrusaderSound;
-import crusader.mapper.data.model.SoundFile;
+import crusader.mapper.data.model.FileWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 public class SoundEntryController implements Initializable {
 
-	private final SoundFile soundEntry;
+	private final FileWrapper soundEntry;
 
 	@FXML
 	private Label origSound, replacedSound;

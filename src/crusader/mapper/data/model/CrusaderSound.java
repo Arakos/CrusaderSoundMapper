@@ -5,7 +5,7 @@ import java.util.Set;
 
 import crusader.mapper.data.model.SoundTagManager.SOUND_TAGS;
 
-public class CrusaderSound extends SoundFile {
+public class CrusaderSound extends FileWrapper {
 
 	final Set<SOUND_TAGS> tags;
 

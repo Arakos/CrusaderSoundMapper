@@ -7,9 +7,9 @@ public class SoundMapping {
 
 	CrusaderSound origSound;
 
-	List<SoundFile> replacements;
+	List<FileWrapper> replacements;
 
-	public SoundMapping(CrusaderSound origSound, SoundFile... replacements) {
+	public SoundMapping(CrusaderSound origSound, FileWrapper... replacements) {
 		this.origSound = origSound;
 		this.replacements = Arrays.asList(replacements);
 	}
