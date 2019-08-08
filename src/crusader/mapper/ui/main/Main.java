@@ -15,6 +15,8 @@ public class Main extends Application {
 	public void start(Stage mainStage) {
 		try {
 			TabPane root = (TabPane) FXMLLoader.load(getClass().getResource("/fxml/MainUI.fxml"));
+			mainStage.setHeight(root.getPrefHeight());
+			mainStage.setWidth(root.getPrefWidth());
 			UI_Util.setOnStage(mainStage, root, false);
 
 			while (!DAO.isInitializeable()) {
