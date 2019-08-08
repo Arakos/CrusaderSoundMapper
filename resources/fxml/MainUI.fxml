@@ -20,7 +20,11 @@
                   </SplitPane>
                   <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefWidth="400.0">
                     <items>
-                        <VBox fx:id="contentVbox" />
+                        <ScrollPane>
+                           <content>
+                              <VBox fx:id="contentContainer" />
+                           </content>
+                        </ScrollPane>
                         <ToolBar>
                           <items>
                             <Button fx:id="testbtn" mnemonicParsing="false" text="Test" />
