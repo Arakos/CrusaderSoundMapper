@@ -46,19 +46,15 @@ public class BaseDirectoryDialogController implements Initializable {
 		// file is null if user canceled dir chooser action
 		if (file != null) {
 			field.setText(file.getAbsolutePath());
-			errrLabel.visibleProperty().set(DAO.checkPrefValid(DAO_key, file.getAbsolutePath()));
+			errrLabel.visibleProperty().set(!DAO.checkPrefValid(DAO_key, file.getAbsolutePath()));
 		}
 	}
 
 	private void checkAndClose() {
 		String crusaderDir = baseDirValue.getText();
 		String workDir = workDirValue.getText();
-
-		if (!DAO.checkPrefValid(CRUSADER_PATH_PREF_KEY, crusaderDir)) {
-			invcrusaderdirtext.visibleProperty().set(true);
-		} else if (!DAO.checkPrefValid(WORKING_DIR_PREF_KEY, workDir)) {
-			invworkdirtext.visibleProperty().set(true);
-		} else {
+		if (DAO.checkPrefValid(CRUSADER_PATH_PREF_KEY, crusaderDir)
+				&& DAO.checkPrefValid(WORKING_DIR_PREF_KEY, workDir)) {
 			DAO.setGlobalPref(CRUSADER_PATH_PREF_KEY, crusaderDir);
 			DAO.setGlobalPref(WORKING_DIR_PREF_KEY, workDir);
 			((Stage) okbtn.getScene().getWindow()).close();

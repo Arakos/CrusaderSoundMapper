@@ -11,7 +11,7 @@ public class BaseDirectoryChooserFragment extends BaseFragment<TitledPane> {
 	}
 
 	public BaseDirectoryChooserFragment(Parent parent, Object controller) {
-		super(parent);
+		super(parent, controller);
 	}
 
 	@Override

@@ -14,14 +14,14 @@ public class Main extends Application {
 	@Override
 	public void start(Stage mainStage) {
 		try {
+			while (!DAO.isInitializeable()) {
+				UI_Util.openInNewWindow(new BaseDirectoryChooserFragment());
+			}
+
 			TabPane root = (TabPane) FXMLLoader.load(getClass().getResource("/fxml/MainUI.fxml"));
 			mainStage.setHeight(root.getPrefHeight());
 			mainStage.setWidth(root.getPrefWidth());
 			UI_Util.setOnStage(mainStage, root, false);
-
-			while (!DAO.isInitializeable()) {
-				UI_Util.openInNewWindow(new BaseDirectoryChooserFragment());
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
