@@ -5,13 +5,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <fx:root type="VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER_LEFT" minHeight="50.0" minWidth="300.0">
+      <HBox alignment="CENTER_LEFT">
          <children>
             <Button fx:id="playBtn" alignment="CENTER" contentDisplay="CENTER" maxWidth="70.0" minWidth="50.0" mnemonicParsing="false" text="Play" />
-            <Label fx:id="soundLabel" minHeight="50.0" text="Label" />
+            <Label fx:id="soundLabel" minHeight="30.0" minWidth="250.0" text="Label" />
          </children>
       </HBox>
    </children>

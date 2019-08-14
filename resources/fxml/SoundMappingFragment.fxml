@@ -4,14 +4,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="50.0" minWidth="300.0" type="VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" type="VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="origSoundContainer" layoutX="10.0" layoutY="10.0" minWidth="350.0">
+      <VBox layoutX="10.0" layoutY="10.0">
          <children>
-            <HBox minWidth="350.0">
+            <VBox fx:id="origSoundContainer" />
+            <HBox>
                <children>
-                  <Pane maxWidth="50.0" minWidth="50.0" />
-                  <VBox fx:id="mappedSoundContainer" minWidth="300.0" />
+                  <Pane maxWidth="50.0" minHeight="30.0" minWidth="50.0" />
+                  <VBox fx:id="mappedSoundContainer" minHeight="30.0" minWidth="300.0" />
                </children>
             </HBox>
          </children>
