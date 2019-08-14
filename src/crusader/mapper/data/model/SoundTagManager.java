@@ -14,7 +14,7 @@ public class SoundTagManager {
 		UNIT, COMMAND, ACTION, ARAB;
 	}
 	
-	public enum SOUND_TAGS {
+	public enum SOUND_TAG {
 		
 		ATTACK("_atk[\\w][1-5]", META_TAG.COMMAND)
 		,MOVE("_m[1-5]", META_TAG.COMMAND)
@@ -46,7 +46,7 @@ public class SoundTagManager {
 		private final Set<META_TAG> metaTags;
 		
 	
-		private SOUND_TAGS(String regex, META_TAG... metaTags) {
+		private SOUND_TAG(String regex, META_TAG... metaTags) {
 			this.regex = Pattern.compile(regex);
 			this.metaTags = new HashSet<>(Arrays.asList(metaTags));
 		}
@@ -61,9 +61,9 @@ public class SoundTagManager {
 		
 	}
 	
-	public static Set<SOUND_TAGS> getSoundTags(String str) {
-		Set<SOUND_TAGS> tags = new HashSet<>();
-		for (SOUND_TAGS m : SOUND_TAGS.values()) {
+	public static Set<SOUND_TAG> getSoundTags(String str) {
+		Set<SOUND_TAG> tags = new HashSet<>();
+		for (SOUND_TAG m : SOUND_TAG.values()) {
 			if (m.getRegex().matcher(str.toLowerCase()).find()) {
 				tags.add(m);
 			}
@@ -71,7 +71,7 @@ public class SoundTagManager {
 		return tags;
 	}
 	
-	public static Set<META_TAG> getMetaTags(Collection<SOUND_TAGS> soundTags) {
+	public static Set<META_TAG> getMetaTags(Collection<SOUND_TAG> soundTags) {
 		return soundTags.stream().flatMap(tag -> tag.getMetaTags().stream()).collect(Collectors.toSet());
 	}
 }
