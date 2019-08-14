@@ -3,18 +3,14 @@ package crusader.mapper.ui.fragments;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import crusader.mapper.controler.SoundEntryController;
 import crusader.mapper.data.model.FileWrapper;
 import crusader.mapper.util.SoundUtil;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
-public class PlaySoundFragment extends BaseFragment<Object> implements Initializable {
+public class PlaySoundFragment extends BaseFragment<Object> {
 
     FileWrapper soundFile;
 
@@ -24,8 +20,12 @@ public class PlaySoundFragment extends BaseFragment<Object> implements Initializ
     @FXML
     Label soundLabel;
 
+	public PlaySoundFragment(FileWrapper soundFile) {
+		this(null, soundFile);
+	}
+
 	public PlaySoundFragment(Parent root, FileWrapper soundFile) {
-        super(root, null);
+		super(root);
         loader.setController(this);
         this.soundFile = soundFile;
 	}

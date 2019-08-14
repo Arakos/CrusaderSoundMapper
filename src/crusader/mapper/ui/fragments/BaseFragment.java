@@ -1,22 +1,24 @@
 package crusader.mapper.ui.fragments;
 
-import crusader.mapper.controler.SoundEntryController;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 
-public abstract class BaseFragment<T> implements Fragment<T> {
+public abstract class BaseFragment<T> implements Fragment<T>, Initializable {
 
 	protected final FXMLLoader loader;
 
-	protected BaseFragment(Parent root) {
-		this(root, null);
+	protected BaseFragment() {
+		this(null);
 	}
 
-	protected BaseFragment(Parent root, Object controller) {
-		this.loader = new FXMLLoader(SoundEntryController.class.getResource(getResourceFXML()));
-		if (controller != null) {
-			loader.setController(controller);
-		}
+	protected BaseFragment(Parent root) {
+		loader = new FXMLLoader(getClass().getResource(getResourceFXML()));
+		loader.setController(this);
+		setParent(root);
+	}
+
+	public void setParent(Parent root) {
 		if (root != null) {
 			loader.setRoot(root);
 		}
