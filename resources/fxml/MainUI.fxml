@@ -14,7 +14,12 @@
               <items>
                   <SplitPane dividerPositions="0.5" minWidth="300.0" orientation="VERTICAL" prefWidth="500.0">
                     <items>
-                        <ListView fx:id="topleftlist" />
+                        <VBox>
+                           <children>
+                              <TextField fx:id="filterText" />
+                              <ListView fx:id="crusaderSoundContainer" />
+                           </children>
+                        </VBox>
                         <TreeView fx:id="workDir" />
                     </items>
                   </SplitPane>

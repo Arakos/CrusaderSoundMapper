@@ -13,10 +13,13 @@ import crusader.mapper.ui.fragments.SoundMappingFragment;
 import crusader.mapper.util.SoundUtil;
 import crusader.mapper.util.UI_Util;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseButton;
@@ -25,7 +28,7 @@ import javafx.scene.layout.VBox;
 public class MainControler implements Initializable {
 
 	@FXML
-	private ListView<CrusaderSound> topleftlist;
+	private ListView<CrusaderSound> crusaderSoundContainer;
 
 	@FXML
 	private TreeView<FileWrapper> workDir;
@@ -36,13 +39,27 @@ public class MainControler implements Initializable {
 	@FXML
 	private VBox contentContainer;
 
+	@FXML
+	private TextField filterText;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		DAO dao = DAO.getInstance();
-		topleftlist.setItems(FXCollections.observableArrayList(dao.getTaggedCrusaderSoundFiles()));
-		topleftlist.setOnMouseClicked(e -> {
-			CrusaderSound selectedSound = topleftlist.getSelectionModel().getSelectedItem();
+		ObservableList<CrusaderSound> soundItems = FXCollections.observableArrayList(dao.getTaggedCrusaderSoundFiles());
+		FilteredList<CrusaderSound> filteredList = new FilteredList<>(soundItems);
+		filterText.textProperty().addListener(e -> {
+			if (filterText.getText().length() > 2) {
+				filteredList.setPredicate(
+						soundItem -> soundItem.toString().toLowerCase().contains(filterText.getText().toLowerCase()));
+			} else {
+				filteredList.setPredicate(soundItem -> true);
+			}
+		});
+
+		crusaderSoundContainer.setItems(filteredList);
+		crusaderSoundContainer.setOnMouseClicked(e -> {
+			CrusaderSound selectedSound = crusaderSoundContainer.getSelectionModel().getSelectedItem();
 			if (e.getButton() == MouseButton.PRIMARY) {
 				if (e.getClickCount() == 1) {
 					new SoundMappingFragment(contentContainer, new SoundMapping(selectedSound, selectedSound, selectedSound)).createFragment();
